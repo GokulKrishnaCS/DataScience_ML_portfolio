@@ -30,6 +30,9 @@ I turn raw data into clear business decisions using analytics, visualization, an
 
 ## Featured Projects
 
+**Retail Profit Leakage Analysis** — Identified key drivers of profit loss across products, regions, and discount levels; built SQL-based analysis and BI-ready outputs to support pricing and operations decisions.  
+`SQL · Power BI · KPI Analysis`
+
 **Zirconia Price Prediction** — Pricing model for gemstone inventory; improved estimation reliability for profit-focused decisions.  
 `Python · Scikit-learn · PCA`
 
