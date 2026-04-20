@@ -1,0 +1,96 @@
+# ============================================================================
+# OpsBot - All 7 Phases Dependencies
+# ============================================================================
+# Phase 1: Document Ingestion & Indexing
+# Phase 2: RAG Query Engine
+# Phase 3: Agentic Workflows
+# Phase 4: MCP Server Integration
+# Phase 5: Evaluation Framework
+# Phase 6: REST API Backend
+# Phase 7: Docker & Deployment
+# ============================================================================
+
+# ============================================================================
+# CORE DEPENDENCIES (all phases)
+# ============================================================================
+
+# Vector database (Phase 1, 2) - in-process, zero infrastructure
+chromadb>=0.4.0
+
+# LLM embeddings (Phase 1, 2) - HuggingFace's fast, free model
+sentence-transformers>=2.6.0
+transformers>=4.30.0
+torch>=2.0.0
+
+# Sparse retrieval (Phase 2) - keyword-based ranking
+rank-bm25>=0.2.0
+
+# Data structures (all phases) - type validation
+pydantic>=2.0.0
+
+# ============================================================================
+# LLM INTEGRATION (Phase 2, 3, 5, 6)
+# ============================================================================
+
+# OpenAI API
+openai>=1.0.0
+
+# ============================================================================
+# API SERVER (Phase 6)
+# ============================================================================
+
+# FastAPI framework - modern REST API
+fastapi>=0.104.0
+
+# ASGI server - run FastAPI
+uvicorn>=0.24.0
+
+# Async HTTP client
+httpx>=0.25.0
+
+# ============================================================================
+# DOCUMENT PROCESSING (Phase 1)
+# ============================================================================
+
+# Markdown parsing
+markdown-it-py>=3.0.0
+linkify-it-py>=2.0.0
+
+# Data processing and progress tracking
+tqdm>=4.60.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# HTTP requests
+requests>=2.31.0
+
+# ============================================================================
+# EVALUATION (Phase 5)
+# ============================================================================
+
+# (RAGAS would be added for production)
+# ragas>=0.0.60
+
+# ============================================================================
+# UTILITIES
+# ============================================================================
+
+# Type hints (Python 3.11 compatible)
+typing-extensions>=4.0.0
+
+# ============================================================================
+# DEVELOPMENT (optional)
+# ============================================================================
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Code quality
+black>=23.0.0
+isort>=5.0.0
+flake8>=6.0.0
+
+# API documentation
+python-multipart>=0.0.6

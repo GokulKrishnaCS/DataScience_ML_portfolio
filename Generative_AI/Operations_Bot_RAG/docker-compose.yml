@@ -1,0 +1,88 @@
+# ============================================================================
+# DOCKER COMPOSE - LOCAL DEVELOPMENT & TESTING
+# ============================================================================
+# Run: docker-compose up
+# Stop: docker-compose down
+# View logs: docker-compose logs -f api
+# ============================================================================
+
+version: '3.8'
+
+services:
+  # =========================================================================
+  # OpsBot API Server
+  # =========================================================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      # Mount data directory for handbook/indexes (development)
+      - ./opsbot/data:/app/opsbot/data
+      # Mount scripts for development
+      - ./opsbot/scripts:/app/opsbot/scripts
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - opsbot-network
+
+  # =========================================================================
+  # ChromaDB Vector Database (optional separate service)
+  # Currently embedded in OpsBot, but could be split out for scale
+  # =========================================================================
+  # chroma:
+  #   image: chromadb/chroma:latest
+  #   ports:
+  #     - "8001:8000"
+  #   environment:
+  #     - IS_PERSISTENT=True
+  #   volumes:
+  #     - ./opsbot/data/chroma:/data
+  #   networks:
+  #     - opsbot-network
+
+  # =========================================================================
+  # Prometheus Metrics (optional monitoring)
+  # =========================================================================
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  #   networks:
+  #     - opsbot-network
+
+  # =========================================================================
+  # Grafana Dashboards (optional visualization)
+  # =========================================================================
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin
+  #   volumes:
+  #     - ./grafana/provisioning:/etc/grafana/provisioning
+  #   depends_on:
+  #     - prometheus
+  #   networks:
+  #     - opsbot-network
+
+networks:
+  opsbot-network:
+    driver: bridge
+
+volumes:
+  opsbot-data:
+    driver: local
